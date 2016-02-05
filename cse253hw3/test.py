@@ -44,11 +44,11 @@ def get_cifar100(folder):
 #=======================================================
 if __name__ == '__main__':
     datapath = "../../caffe/data/cifar-100-python"
-    tr_data, tr_labels, te_data, te_labels, label_names = get_cifar100(datapath)
+    tr_data, tr_clabels, tr_flabels, te_data, te_clabels, te_flabels, clabel_names, flabel_names = get_cifar100(datapath)
 
 
-tr_N = len(tr_labels);
-te_N = len(te_labels);
+tr_N = len(tr_flabels);
+te_N = len(te_flabels);
 
 tr_data = tr_data.reshape((3,32,32))
 te_data = te_data.reshape((3,32,32))
