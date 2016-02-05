@@ -14,7 +14,6 @@ def unpickle(file):
     fo.close()
     return dict
 
-
 #=======================================================
 #Funciton defined for get the cifar-100 dataset
 #=======================================================
@@ -37,8 +36,6 @@ def get_cifar100(folder):
 
     return train_data, np.array(train_coarse_labels), np.array(train_fine_labels), test_data, np.array(test_coarse_labels), np.array(test_fine_labels), clabel_names, flabel_names
 
-
-
 #=======================================================
 #Specify datapath and get data
 #=======================================================
@@ -46,26 +43,26 @@ if __name__ == '__main__':
     datapath = "../../caffe/data/cifar-100-python"
     tr_data, tr_clabels, tr_flabels, te_data, te_clabels, te_flabels, clabel_names, flabel_names = get_cifar100(datapath)
 
-
 tr_N = len(tr_labels);
 te_N = len(te_labels);
 
-tr_data = tr_data.reshape((3,32,32))
-te_data = te_data.reshape((3,32,32))
-
-X = np.zeros((tr_N, 3, 32, 32), dtype=np.uint8)
+X = np.zeros((tr_N, 32, 32, 3), dtype=np.uint8)
 y = np.zeros(tr_N, dtype=np.int64)
 
+for i in range(tr_N):
+    X[i] = tr_data[0].reshape((32, 32, 3), order = 'F')
+    y[i] = tr_clabels[i]
+
 mapSize1 = X.nbytes * 10
-env = lmdb.open('mylmdb', map_size=mapSize1)
+env = lmdb.open('train_data_lmdb', map_size=mapSize1)
 
 with env.begin(write=True) as txn:
     # txn is a Transaction object
     for i in range(tr_N):
         datum = caffe.proto.caffe_pb2.Datum()
-        datum.channels = X.shape[1]
-        datum.height = X.shape[2]
-        datum.width = X.shape[3]
+        datum.channels = X.shape[3]
+        datum.height = X.shape[1]
+        datum.width = X.shape[2]
         datum.data = X[i].tobytes()  # or .tostring() if numpy < 1.9
         datum.label = int(y[i])
         str_id = '{:08}'.format(i)
