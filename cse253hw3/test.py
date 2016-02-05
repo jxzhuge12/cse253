@@ -40,7 +40,7 @@ def get_cifar100(folder):
 
 
 #=======================================================
-#Specify datapath and get dat
+#Specify datapath and get data
 #=======================================================
 if __name__ == '__main__':
     datapath = "../../caffe/data/cifar-100-python"
