@@ -51,7 +51,7 @@ X = np.zeros((te_N, 32, 32, 3), dtype=np.uint8)
 y = np.zeros(te_N, dtype=np.int64)
 
 for i in range(te_N):
-    X[i] = np.rollaxis(te_data[0].reshape((3,32,32)),0,3)
+    X[i] = np.rollaxis(te_data[i].reshape((3,32,32)),0,3)
     y[i] = te_flabels[i]
 
 mapSize1 = X.nbytes * 10
