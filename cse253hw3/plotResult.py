@@ -12,5 +12,7 @@ ax2.plot(test_log["NumIters"], test_log["TestAccuracy"], 'r')
 ax1.set_xlabel('iteration')
 ax1.set_ylabel('train loss')
 ax2.set_ylabel('test accuracy')
+ax1.legend(['Training Loss', 'Testing Loss'], loc='lower right')
+ax2.legend(['Test Accuracy'], loc='upper left')
 
 plt.show()
